@@ -1,0 +1,79 @@
+# Python Bytecode
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Jupyter Notebook Checkpoints
+
+.ipynb_checkpoints/
+
+# IDE / Editor Settings
+
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS Files
+
+.DS_Store
+Thumbs.db
+
+# Logs
+
+*.log
+
+# Environment Variables
+
+.env
+.env.*
+
+# Data Files 
+
+*.csv
+
+*.xlsx
+
+# Output Files
+
+*.pdf
+*.png
+*.jpg
+*.jpeg
+
+# Model / Cache Files
+
+*.pkl
+*.joblib
+
+# Flask Specific
+
+instance/
+.webassets-cache
+
+# Testing / Coverage
+
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# Build Files
+
+build/
+dist/
+*.egg-info/
+
+# Temporary Files
+
+*.tmp
+*.temp
