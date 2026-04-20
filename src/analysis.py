@@ -1,5 +1,5 @@
 import pandas as pd
-from scipy.stats import f_oneway
+from scipy.stats import f_oneway, ttest_ind
 
 def genotype_analysis(file_path):
     # Load dataset
