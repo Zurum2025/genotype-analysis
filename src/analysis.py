@@ -3,6 +3,69 @@ from scipy.stats import f_oneway, ttest_ind
 from itertools import combinations
 
 def full_statistical_analysis(file_path):
+
+    """
+    Perform comprehensive statistical analysis on hematological parameters 
+    grouped by genotype.
+
+    This function conducts a one-way Analysis of Variance (ANOVA) across all 
+    available genotype groups to determine whether statistically significant 
+    differences exist among them. It then performs automatic pairwise 
+    independent two-sample t-tests (Welch’s t-test) between all possible 
+    genotype combinations.
+
+    The results are returned as structured pandas DataFrames suitable for 
+    academic reporting and further analysis.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the input CSV file containing the dataset. The dataset must 
+        include a 'Genotype' column and the following numerical columns:
+        ['Hb', 'PCV', 'MCV', 'MCH', 'MCHC', 'RBC', 'TWBC', 'Platelets'].
+
+    Returns
+    -------
+    dict
+        A dictionary containing:
+        
+        - "ANOVA" : pandas.DataFrame
+            A table with columns:
+            ['Parameters', 'F-value', 'P-value'], showing results of the 
+            one-way ANOVA for each parameter.
+        
+        - "T-TESTS" : dict of pandas.DataFrame
+            A dictionary where each key represents a pairwise comparison 
+            (e.g., 'AA_vs_SS'), and each value is a DataFrame with columns:
+            ['Parameters', '<Group1> (n = x)', '<Group2> (n = y)', 
+             'T-test', 'P-value'].
+
+    Raises
+    ------
+    FileNotFoundError
+        If the specified file_path does not exist.
+
+    KeyError
+        If required columns (e.g., 'Genotype' or parameter columns) are missing.
+
+    ValueError
+        If the dataset does not contain at least two genotype groups for analysis.
+
+    Notes
+    -----
+    - ANOVA is used to test the null hypothesis that all group means are equal.
+    - Welch’s t-test (independent samples, unequal variance) is used for 
+      pairwise comparisons.
+    - A p-value < 0.05 is typically considered statistically significant.
+    - Multiple pairwise comparisons may increase Type I error; consider applying 
+      correction methods such as Bonferroni or Tukey HSD if required.
+
+    Examples
+    --------
+    >>> results = full_statistical_analysis("data.csv")
+    >>> results["ANOVA"]
+    >>> results["T-TESTS"]["AA_vs_SS"]
+    """
     # Load dataset
     df = pd.read_csv(file_path)
     
@@ -102,17 +165,3 @@ def full_statistical_analysis(file_path):
         "ANOVA": anova_table,
         "T-TESTS": ttest_tables
     }
-
-
-
-
-#usage
-results = full_statistical_analysis('C:/Users/Zurum/OneDrive/Desktop/Data_analysis_projects/DAPP/src/genotype_data.csv')
-
-# ANOVA table
-print(results["ANOVA"])
-
-# T-test tables
-for name, table in results["T-TESTS"].items():
-    print(f"\n{name}")
-    print(table)
