@@ -57,8 +57,6 @@ def full_statistical_analysis(file_path):
     - Welch’s t-test (independent samples, unequal variance) is used for 
       pairwise comparisons.
     - A p-value < 0.05 is typically considered statistically significant.
-    - Multiple pairwise comparisons may increase Type I error; consider applying 
-      correction methods such as Bonferroni or Tukey HSD if required.
 
     Examples
     --------

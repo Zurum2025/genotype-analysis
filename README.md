@@ -1,26 +1,35 @@
-# 🧬 Genotype-Based Hematological Analysis with ANOVA
+# 🧬 Genotype-Based Hematological Analysis with ANOVA and Pairwise T-Tests
 
-## Project Overview
+## 📌 Project Overview
 
-This project performs statistical analysis on hematological parameters across different genotypes (**AA, AS, SS**). It computes:
+This project performs comprehensive statistical analysis on hematological parameters across different genotypes (**AA, AS, SS**).
 
-* Mean and Standard Deviation
-* One-Way ANOVA (F-value and P-value)
+It implements a complete statistical pipeline that includes:
 
-The output is a well-structured table suitable for academic reports and research work.
+* Descriptive statistics (**mean ± standard deviation**)
+* One-Way ANOVA (**F-value and P-value**)
+* Automatic **pairwise independent t-tests** between genotype groups
 
----
-
-## Features
-
-* Automated calculation of **mean ± standard deviation**
-* Performs **One-Way ANOVA** for each parameter
-* Handles missing genotype groups gracefully
-* Outputs clean, publication-ready tables
+The output is structured into clean, publication-ready tables suitable for academic research and reports.
 
 ---
 
-## Parameters Analyzed
+## ⚙️ Features
+
+* Automated computation of **mean ± standard deviation**
+* Performs **One-Way ANOVA** across all genotype groups
+* Automatically generates **pairwise t-tests**:
+
+  * AA vs AS
+  * AA vs SS
+  * AS vs SS
+* Uses **Welch’s t-test** (robust to unequal variances)
+* Handles missing or incomplete genotype groups gracefully
+* Produces structured outputs ready for export or reporting
+
+---
+
+## 🧪 Parameters Analyzed
 
 * Hemoglobin (Hb)
 * Packed Cell Volume (PCV)
@@ -37,30 +46,56 @@ The output is a well-structured table suitable for academic reports and research
 
 ### 1. Data Loading
 
-Dataset is loaded using Pandas.
+The dataset is loaded from a CSV file using **pandas**.
 
 ### 2. Grouping
 
-Data is grouped by genotype:
+Data is grouped based on genotype:
 
 * AA
 * AS
 * SS
 
-### 3. Statistical Analysis
+### 3. Descriptive Statistics
 
-* Mean and standard deviation computed for each group
-* One-way ANOVA performed using SciPy
+For each parameter and genotype:
+
+* Mean and standard deviation are computed
+* Results are formatted as: **mean ± standard deviation**
+
+### 4. One-Way ANOVA
+
+* Conducted across all available genotype groups
+* Tests the null hypothesis that all group means are equal
+
+### 5. Pairwise T-Tests
+
+* Automatically performed for all genotype combinations
+* Uses **independent two-sample t-test (Welch’s correction)**
+* Identifies where specific differences occur between groups
 
 ---
 
-## 📈 ANOVA Interpretation
+## 📈 Statistical Interpretation
 
-* **F-value**: Measures variance between groups
+### ANOVA
+
+* **F-value**: Measures variance between group means
 * **P-value**:
 
-  * p < 0.05 → Significant difference
+  * p < 0.05 → Statistically significant difference exists
   * p ≥ 0.05 → No significant difference
+
+### T-Test
+
+* **T-value**: Magnitude and direction of difference between two groups
+* **P-value**:
+
+  * p < 0.05 → Significant difference between the two groups
+  * p ≥ 0.05 → No significant difference
+
+> ⚠️ Note: Multiple pairwise comparisons may increase Type I error.
+> Consider applying correction methods (e.g., Bonferroni) for rigorous studies.
 
 ---
 
@@ -72,43 +107,66 @@ pip install pandas scipy
 
 ---
 
-## Usage
+## 🚀 Usage
 
 ```python
-from analysis import genotype_analysis
+from analysis import full_statistical_analysis
 
-result = genotype_analysis("data.csv")
-print(result)
+results = full_statistical_analysis("data.csv")
+
+# ANOVA results
+print(results["ANOVA"])
+
+# Pairwise t-tests
+for name, table in results["T-TESTS"].items():
+    print(f"\n{name}")
+    print(table)
 ```
 
 ---
 
-## Example Output
+## 📂 Output Structure
+
+### 1. ANOVA Table
 
 | Parameters | AA           | AS           | SS          | F-value | P-value |
 | ---------- | ------------ | ------------ | ----------- | ------- | ------- |
-| Hb         | 13.50 ± 1.20 | 12.30 ± 1.10 | 9.80 ± 1.50 | 8.2345  | 0.0012  |
+| Hb         | 13.50 ± 1.20 | 13.14 ± 1.17 | 8.12 ± 0.51 | 8.2345  | 0.0012  |
 
 ---
 
-## Dependencies
+### 2. Pairwise T-Test Tables
+
+Each comparison (e.g., **AA_vs_SS**) produces:
+
+| Parameters | Group 1      | Group 2     | T-test | P-value |
+| ---------- | ------------ | ----------- | ------ | ------- |
+| Hb         | 13.50 ± 1.20 | 9.80 ± 1.50 | -17.81 | 0.0000  |
+
+---
+
+## 📦 Dependencies
 
 * pandas
 * scipy
 
 ---
 
-## Use Cases
+## 🎯 Use Cases
 
-* Medical research
-* Academic projects
+* Medical and clinical research
 * Hematological data analysis
-* Final year projects 
+* Academic and final year projects
+* Statistical comparison of grouped datasets
 
 ---
 
-## Author
+## 👤 Author
 
 Chizurum Chiemela
 
 ---
+
+## 📄 License
+
+This project is intended for educational and research purposes.
